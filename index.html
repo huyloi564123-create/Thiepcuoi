@@ -6,12 +6,7 @@
 <title>Thiệp cưới</title>
 
 <style>
-body{
- margin:0;
- font-family:sans-serif;
- text-align:center;
- overflow-x:hidden;
-}
+body{margin:0;font-family:sans-serif;text-align:center;overflow-x:hidden;background:#fff}
 
 /* COVER */
 .cover{
@@ -21,7 +16,7 @@ body{
  flex-direction:column;
  justify-content:center;
  color:white;
- animation: fadeIn 2s;
+ animation:fadeIn 2s;
 }
 
 .btn{
@@ -30,15 +25,14 @@ body{
  border:none;
  border-radius:25px;
  color:white;
- font-size:16px;
 }
 
-/* HIỆU ỨNG */
+/* SECTION */
 .section{
  padding:50px 20px;
  opacity:0;
  transform:translateY(30px);
- transition: all 1s;
+ transition:1s;
 }
 
 .show{
@@ -46,11 +40,32 @@ body{
  transform:translateY(0);
 }
 
-img{
- width:90%;
+/* SLIDESHOW */
+.slider{
+ position:relative;
  max-width:300px;
+ margin:auto;
+}
+.slider img{
+ width:100%;
  border-radius:15px;
- margin:10px;
+ display:none;
+}
+.slider img.active{
+ display:block;
+}
+
+/* TIM BAY */
+.heart{
+ position:fixed;
+ color:red;
+ font-size:20px;
+ animation:fly 4s linear infinite;
+}
+
+@keyframes fly{
+ 0%{transform:translateY(0);opacity:1}
+ 100%{transform:translateY(-800px);opacity:0}
 }
 
 @keyframes fadeIn{
@@ -62,26 +77,27 @@ img{
 
 <body>
 
-<!-- COVER -->
 <div class="cover">
 <h1>Quân ❤️ Hồng</h1>
-<p>Chúng mình sắp cưới</p>
 <button class="btn" onclick="openInvite()">Mở thiệp</button>
 </div>
 
-<!-- MAIN -->
 <div id="main" style="display:none">
 
 <div class="section">
 <h2>Thông tin</h2>
 <p>20.12.2026</p>
-<p>Nhà hàng Hoa Sen</p>
 </div>
 
 <div class="section">
 <h2>Album</h2>
-<img src="https://picsum.photos/300/400?1">
+
+<div class="slider">
+<img src="https://picsum.photos/300/400?1" class="active">
 <img src="https://picsum.photos/300/400?2">
+<img src="https://picsum.photos/300/400?3">
+</div>
+
 </div>
 
 <div class="section">
@@ -91,40 +107,54 @@ img{
 
 </div>
 
-<!-- NHẠC -->
 <audio id="music" loop>
-<source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3">
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8a3c0a6c1.mp3">
 </audio>
 
 <script>
-// MỞ THIỆP + NHẠC (fix lỗi mobile)
+// mở thiệp + nhạc
 function openInvite(){
  document.querySelector('.cover').style.display='none';
  document.getElementById('main').style.display='block';
-
- let music = document.getElementById('music');
- music.play().catch(()=>{}); // tránh lỗi bị chặn
+ document.getElementById('music').play();
 }
 
-// HIỆU ỨNG SCROLL
-let sections = document.querySelectorAll('.section');
-
+// hiệu ứng scroll
+let sections=document.querySelectorAll('.section');
 window.addEventListener('scroll',()=>{
- sections.forEach(sec=>{
-  let top = sec.getBoundingClientRect().top;
-  if(top < window.innerHeight - 100){
-    sec.classList.add('show');
+ sections.forEach(s=>{
+  if(s.getBoundingClientRect().top<window.innerHeight-100){
+   s.classList.add('show');
   }
  });
 });
 
-// COUNTDOWN
+// slideshow
+let slides=document.querySelectorAll('.slider img');
+let i=0;
+setInterval(()=>{
+ slides[i].classList.remove('active');
+ i=(i+1)%slides.length;
+ slides[i].classList.add('active');
+},2000);
+
+// countdown
 let d=new Date("Dec 20, 2026").getTime();
 setInterval(()=>{
  let n=new Date().getTime();
  let c=Math.floor((d-n)/(1000*60*60*24));
  document.getElementById("cd").innerHTML=c+" ngày nữa";
 },1000);
+
+// tim bay
+setInterval(()=>{
+ let h=document.createElement("div");
+ h.className="heart";
+ h.innerHTML="❤️";
+ h.style.left=Math.random()*100+"%";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),4000);
+},500);
 </script>
 
 </body>
