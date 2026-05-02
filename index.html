@@ -6,154 +6,61 @@
 <title>Thiệp cưới</title>
 
 <style>
-body{margin:0;font-family:sans-serif;text-align:center;overflow-x:hidden;background:#fff}
+body{margin:0;font-family:sans-serif;text-align:center;background:#fff}
 
 /* COVER */
 .cover{
  height:100vh;
- background:url('https://picsum.photos/800/1200') center/cover;
+ background:pink;
  display:flex;
  flex-direction:column;
  justify-content:center;
- color:white;
- animation:fadeIn 2s;
+ align-items:center;
 }
 
-.btn{
- padding:12px 25px;
- background:#d4af37;
- border:none;
- border-radius:25px;
- color:white;
-}
+/* NỘI DUNG */
+.section{padding:40px}
 
-/* SECTION */
-.section{
- padding:50px 20px;
- opacity:0;
- transform:translateY(30px);
- transition:1s;
-}
-
-.show{
- opacity:1;
- transform:translateY(0);
-}
-
-/* SLIDESHOW */
-.slider{
- position:relative;
- max-width:300px;
- margin:auto;
-}
-.slider img{
- width:100%;
- border-radius:15px;
- display:none;
-}
-.slider img.active{
- display:block;
-}
-
-/* TIM BAY */
+/* TIM */
 .heart{
  position:fixed;
  color:red;
- font-size:20px;
  animation:fly 4s linear infinite;
 }
 
 @keyframes fly{
- 0%{transform:translateY(0);opacity:1}
- 100%{transform:translateY(-800px);opacity:0}
-}
-
-@keyframes fadeIn{
- from{opacity:0}
- to{opacity:1}
+ from{transform:translateY(0)}
+ to{transform:translateY(-800px)}
 }
 </style>
 </head>
 
 <body>
 
-<div class="cover">
-<h1>Vũ Đoàn ❤️ Phạm Lâm</h1>
-<button class="btn" onclick="openInvite()">Mở thiệp</button>
+<!-- COVER -->
+<div class="cover" id="cover">
+<h1>Quân ❤️ Hồng</h1>
+<button onclick="openInvite()">Mở thiệp</button>
 </div>
 
-<div id="main">
-
+<!-- MAIN -->
+<div id="main" style="display:none">
 <div class="section">
-<h2>lễ thành hôn</h2>
-<p>11.05.2026</p>
+<h2>Đây là nội dung cưới</h2>
+<p>Đã hiện rồi 🎉</p>
 </div>
-
-<div class="section">
-<h2>Album</h2>
-
-<div class="slider">
-<img src="anh1" class="active">
-<img src="anh2">
-<img src="anh3">
-<img src="anh4">
-<img src="anh5">
- <img src="anh6">
-<img src="anh7">
- <img src="anh8">
-<img src="anh9">
-
-
- 
-</div>
-
-</div>
-
-<div class="section">
-<h2>Countdown</h2>
-<p id="cd"></p>
-</div>
-
 </div>
 
 <audio id="music" loop>
-<source src="L%E1%BB%85%20%C4%90%C6%B0%E1%BB%9Dng%20(Dreamland%20Version)%20-%20KAI%20%C4%90INH%20OFFICIAL%20MV.mp3">
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8a3c0a6c1.mp3">
 </audio>
 
 <script>
-// mở thiệp + nhạc
 function openInvite(){
- document.querySelector('.cover').style.display='none';
- document.getElementById('main').style.display='block';
- document.getElementById('music').play();
+ document.getElementById("cover").style.display="none";
+ document.getElementById("main").style.display="block";
+ document.getElementById("music").play();
 }
-
-// hiệu ứng scroll
-let sections=document.querySelectorAll('.section');
-window.addEventListener('scroll',()=>{
- sections.forEach(s=>{
-  if(s.getBoundingClientRect().top<window.innerHeight-100){
-   s.classList.add('show');
-  }
- });
-});
-
-// slideshow
-let slides=document.querySelectorAll('.slider img');
-let i=0;
-setInterval(()=>{
- slides[i].classList.remove('active');
- i=(i+1)%slides.length;
- slides[i].classList.add('active');
-},2000);
-
-// countdown
-let d=new Date("Dec 20, 2026").getTime();
-setInterval(()=>{
- let n=new Date().getTime();
- let c=Math.floor((d-n)/(1000*60*60*24));
- document.getElementById("cd").innerHTML=c+" ngày nữa";
-},1000);
 
 // tim bay
 setInterval(()=>{
